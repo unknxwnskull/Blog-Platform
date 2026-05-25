@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-ink-50 text-ink-900 font-body antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 { @apply font-display; }
+  ::selection { @apply bg-accent text-white; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-ink-100; }
+  ::-webkit-scrollbar-thumb { @apply bg-ink-400 rounded-full; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-ink-900 text-ink-50 px-5 py-2.5 font-sans font-medium text-sm tracking-wide
+           hover:bg-accent transition-colors duration-200;
+  }
+  .btn-outline {
+    @apply border border-ink-900 text-ink-900 px-5 py-2.5 font-sans font-medium text-sm tracking-wide
+           hover:bg-ink-900 hover:text-ink-50 transition-colors duration-200;
+  }
+  .btn-ghost {
+    @apply text-ink-600 px-3 py-2 font-sans text-sm hover:text-ink-900 hover:bg-ink-100
+           transition-colors duration-200;
+  }
+  .prose-content p { @apply font-body leading-relaxed mb-4 text-ink-800; }
+  .prose-content h1, .prose-content h2, .prose-content h3 { @apply font-display font-bold text-ink-900 mb-3 mt-6; }
+  .prose-content h1 { @apply text-3xl; }
+  .prose-content h2 { @apply text-2xl; }
+  .prose-content h3 { @apply text-xl; }
+  .prose-content a { @apply text-accent underline hover:text-accent-dark; }
+  .prose-content blockquote {
+    @apply border-l-4 border-accent pl-6 italic text-ink-600 my-6;
+  }
+  .prose-content pre {
+    @apply bg-ink-900 text-ink-100 p-4 overflow-x-auto my-4 font-mono text-sm;
+  }
+  .prose-content code { @apply bg-ink-100 text-accent px-1 font-mono text-sm; }
+  .prose-content img { @apply w-full my-6; }
+  .prose-content ul { @apply list-disc pl-6 mb-4 space-y-1; }
+  .prose-content ol { @apply list-decimal pl-6 mb-4 space-y-1; }
+  .card {
+    @apply bg-white border border-ink-200 hover:border-ink-400 transition-colors;
+  }
+  .input-field {
+    @apply w-full border border-ink-300 bg-white px-4 py-3 font-sans text-sm
+           focus:outline-none focus:border-ink-900 transition-colors placeholder:text-ink-400;
+  }
+  .tag-pill {
+    @apply text-xs font-sans font-medium px-2.5 py-1 bg-ink-100 text-ink-600
+           hover:bg-ink-900 hover:text-ink-50 transition-colors cursor-pointer;
+  }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.4s ease forwards; }
+.fade-up-delay-1 { animation: fadeUp 0.4s ease 0.1s both; }
+.fade-up-delay-2 { animation: fadeUp 0.4s ease 0.2s both; }
+.fade-up-delay-3 { animation: fadeUp 0.4s ease 0.3s both; }
