@@ -8,6 +8,7 @@ import PostPage from './pages/PostPage'
 import WritePage from './pages/WritePage'
 import { LoginPage, RegisterPage } from './pages/AuthPages'
 import ProfilePage from './pages/ProfilePage'
+import AdminPage from './pages/AdminPage'
 import { BookmarksPage, CategoriesPage } from './pages/OtherPages'
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/profile/:username" element={<ProfilePage />} />
+            <Route path="/admin" element={<AdminPage />} />
             <Route path="/bookmarks" element={<BookmarksPage />} />
             <Route path="/categories" element={<CategoriesPage />} />
             <Route path="*" element={

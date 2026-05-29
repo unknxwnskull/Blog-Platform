@@ -29,9 +29,13 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-  if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+  const identifier = email?.trim();
+  if (!identifier || !password) return res.status(400).json({ error: 'Username/email and password required' });
   try {
-    const [rows] = await pool.execute('SELECT * FROM users WHERE email = ?', [email]);
+    const [rows] = await pool.execute(
+      'SELECT * FROM users WHERE email = ? OR username = ?',
+      [identifier, identifier]
+    );
     if (!rows.length) return res.status(401).json({ error: 'Invalid credentials' });
     const user = rows[0];
     const valid = await bcrypt.compare(password, user.password);

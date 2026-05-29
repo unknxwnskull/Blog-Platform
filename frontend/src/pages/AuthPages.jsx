@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext'
 export function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
-  const [form, setForm] = useState({ email: '', password: '' })
+  const [form, setForm] = useState({ identifier: '', password: '' })
   const [showPw, setShowPw] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -15,7 +15,7 @@ export function LoginPage() {
     e.preventDefault()
     setLoading(true)
     try {
-      await login(form.email, form.password)
+      await login(form.identifier, form.password)
       toast.success('Welcome back!')
       navigate('/')
     } catch (err) {
@@ -36,10 +36,10 @@ export function LoginPage() {
         </div>
         <form onSubmit={submit} className="card p-8 space-y-4">
           <div>
-            <label className="font-sans text-xs uppercase tracking-wider text-ink-600 block mb-1.5">Email</label>
-            <input type="email" value={form.email} required
-              onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-              className="input-field" placeholder="you@example.com" />
+            <label className="font-sans text-xs uppercase tracking-wider text-ink-600 block mb-1.5">Username or Email</label>
+            <input type="text" value={form.identifier} required
+              onChange={e => setForm(f => ({ ...f, identifier: e.target.value }))}
+              className="input-field" placeholder="janedoe or you@example.com" />
           </div>
           <div>
             <label className="font-sans text-xs uppercase tracking-wider text-ink-600 block mb-1.5">Password</label>

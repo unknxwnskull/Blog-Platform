@@ -9,7 +9,9 @@ const calcReadingTime = (content) =>
 
 exports.getPosts = async (req, res) => {
   const { page = 1, limit = 10, category, tag, author, search, status = 'published' } = req.query;
-  const offset = (page - 1) * limit;
+  const pageNum = Math.max(1, Number.parseInt(page, 10) || 1);
+  const limitNum = Math.min(100, Math.max(1, Number.parseInt(limit, 10) || 10));
+  const offset = (pageNum - 1) * limitNum;
   try {
     let where = ['p.status = ?'];
     let params = [status];
@@ -40,8 +42,7 @@ exports.getPosts = async (req, res) => {
       LEFT JOIN categories c ON p.category_id = c.id
       ${tagJoin} ${whereClause}
       ORDER BY p.published_at DESC, p.created_at DESC
-      LIMIT ? OFFSET ?`;
-    params.push(Number(limit), Number(offset));
+      LIMIT ${limitNum} OFFSET ${offset}`;
     const [posts] = await pool.execute(sql, params);
     for (const post of posts) {
       const [tags] = await pool.execute(
@@ -50,7 +51,7 @@ exports.getPosts = async (req, res) => {
       );
       post.tags = tags;
     }
-    res.json({ posts, total, page: Number(page), limit: Number(limit), pages: Math.ceil(total / limit) });
+    res.json({ posts, total, page: pageNum, limit: limitNum, pages: Math.ceil(total / limitNum) });
   } catch (err) { res.status(500).json({ error: err.message }); }
 };
 

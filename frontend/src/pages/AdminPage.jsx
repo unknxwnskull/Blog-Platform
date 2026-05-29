@@ -11,7 +11,7 @@ import { usersAPI, categoriesAPI, postsAPI } from '../utils/api'
 import { useAuth } from '../context/AuthContext'
 
 export default function AdminPage() {
-  const { user, logout } = useAuth()
+  const { user, logout, loading: authLoading } = useAuth()
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('overview')
   const [stats, setStats] = useState(null)
@@ -24,10 +24,11 @@ export default function AdminPage() {
   const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
+    if (authLoading) return
     if (!user) { navigate('/login'); return }
     if (user.role !== 'admin') { navigate('/'); return }
     fetchAll()
-  }, [user])
+  }, [authLoading, user, navigate])
 
   const fetchAll = async () => {
     setLoading(true)
@@ -91,7 +92,7 @@ export default function AdminPage() {
     { id: 'categories', label: 'Categories', icon: Tag },
   ]
 
-  if (loading) return (
+  if (authLoading || loading) return (
     <div className="min-h-screen bg-gray-950 flex items-center justify-center">
       <div className="text-center">
         <div className="w-10 h-10 border-2 border-amber-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
