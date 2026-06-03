@@ -74,13 +74,13 @@ export default function WritePage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 md:mb-8 gap-3">
         <div>
           <h1 className="font-display text-2xl font-bold text-ink-900">{editId ? 'Edit Article' : 'New Article'}</h1>
           <p className="font-sans text-sm text-ink-500 mt-1">Write something worth reading</p>
         </div>
-        <div className="flex items-center gap-2">
-          <button onClick={() => setPreview(!preview)} className="btn-ghost flex items-center gap-1.5 text-sm">
+        <div className="flex items-center gap-2 flex-wrap">
+  <button onClick={() => setPreview(!preview)} className="btn-ghost flex items-center gap-1.5 text-sm">
             <Eye size={15} /> {preview ? 'Edit' : 'Preview'}
           </button>
           <button onClick={() => submit('draft')} disabled={saving}

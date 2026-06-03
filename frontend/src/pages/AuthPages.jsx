@@ -24,7 +24,7 @@ export function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-ink-50">
+    <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-ink-50">
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">

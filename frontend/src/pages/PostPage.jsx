@@ -105,7 +105,7 @@ export default function PostPage() {
           <img src={post.cover_image} alt={post.title} className="w-full h-full object-cover" />
         </div>
       )}
-      <div className="max-w-3xl mx-auto px-4 py-12">
+     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 md:py-12">
         <div className="flex flex-wrap gap-2 mb-5">
           {post.category_name && (
             <Link to={`/?category=${post.category_slug}`}
@@ -116,7 +116,7 @@ export default function PostPage() {
           {post.tags?.map(t => <span key={t.slug} className="tag-pill">{t.name}</span>)}
         </div>
 
-        <h1 className="font-display text-3xl md:text-4xl font-bold text-ink-900 leading-tight mb-6">
+       <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-ink-900 leading-tight mb-5 md:mb-6">
           {post.title}
         </h1>
 
