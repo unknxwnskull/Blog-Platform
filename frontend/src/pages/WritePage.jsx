@@ -23,9 +23,13 @@ export default function WritePage() {
   useEffect(() => {
     categoriesAPI.getAll().then(r => setCategories(r.data.categories)).catch(() => {})
     if (editId) {
-      postsAPI.getAll({ limit: 100 })
-        .then(r => {
-          const p = r.data.posts.find(x => x.id === Number(editId))
+      Promise.all([
+        postsAPI.getAll({ limit: 100, status: 'published' }),
+        postsAPI.getAll({ limit: 100, status: 'draft' }),
+      ])
+        .then(([publishedRes, draftRes]) => {
+          const posts = [...publishedRes.data.posts, ...draftRes.data.posts]
+          const p = posts.find(x => x.id === Number(editId))
           if (p) return postsAPI.getBySlug(p.slug)
         })
         .then(r => {
@@ -66,7 +70,7 @@ export default function WritePage() {
         r = await postsAPI.create(payload)
         toast.success(status === 'published' ? 'Post published!' : 'Draft saved!')
       }
-      navigate(status === 'published' ? `/post/${r.data.post.slug}` : '/')
+      navigate(status === 'published' ? `/post/${r.data.post.slug}` : '/drafts')
     } catch (err) {
       toast.error(err.response?.data?.error || 'Failed to save')
     } finally { setSaving(false) }

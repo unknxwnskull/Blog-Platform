@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Edit, FileText, Plus } from 'lucide-react'
+import toast from 'react-hot-toast'
+import { Edit, FileText, Plus, Send } from 'lucide-react'
 import { format } from 'date-fns'
 import { postsAPI } from '../utils/api'
 import { useAuth } from '../context/AuthContext'
@@ -9,6 +10,7 @@ export default function DraftsPage() {
   const { user } = useAuth()
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [publishingId, setPublishingId] = useState(null)
 
   useEffect(() => {
     if (!user) return
@@ -17,6 +19,19 @@ export default function DraftsPage() {
       .catch(() => {})
       .finally(() => setLoading(false))
   }, [user])
+
+  const publishPost = async (postId) => {
+    setPublishingId(postId)
+    try {
+      await postsAPI.update(postId, { status: 'published' })
+      setPosts(prev => prev.filter(post => post.id !== postId))
+      toast.success('Post published!')
+    } catch (err) {
+      toast.error(err.response?.data?.error || 'Failed to publish')
+    } finally {
+      setPublishingId(null)
+    }
+  }
 
   if (!user) return (
     <div className="max-w-4xl mx-auto px-4 py-20 text-center">
@@ -73,9 +88,15 @@ export default function DraftsPage() {
                   Last saved {post.created_at ? format(new Date(post.created_at), 'MMM d, yyyy') : ''}
                 </p>
               </div>
-              <Link to={`/edit/${post.id}`} className="btn-outline inline-flex items-center justify-center gap-1.5 text-xs flex-shrink-0">
-                <Edit size={13} /> Edit
-              </Link>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <Link to={`/edit/${post.id}`} className="btn-outline inline-flex items-center justify-center gap-1.5 text-xs">
+                  <Edit size={13} /> Edit
+                </Link>
+                <button onClick={() => publishPost(post.id)} disabled={publishingId === post.id}
+                  className="btn-primary inline-flex items-center justify-center gap-1.5 text-xs disabled:opacity-50">
+                  <Send size={13} /> {publishingId === post.id ? 'Publishing...' : 'Publish'}
+                </button>
+              </div>
             </article>
           ))}
         </div>
