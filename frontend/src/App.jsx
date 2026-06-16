@@ -10,6 +10,7 @@ import { LoginPage, RegisterPage } from './pages/AuthPages'
 import ProfilePage from './pages/ProfilePage'
 import AdminPage from './pages/AdminPage'
 import { BookmarksPage, CategoriesPage } from './pages/OtherPages'
+import DraftsPage from './pages/DraftsPage'
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="/profile/:username" element={<ProfilePage />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/bookmarks" element={<BookmarksPage />} />
+            <Route path="/drafts" element={<DraftsPage />} />
             <Route path="/categories" element={<CategoriesPage />} />
             <Route path="*" element={
               <div className="text-center py-32">

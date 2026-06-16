@@ -15,6 +15,11 @@ exports.getPosts = async (req, res) => {
   try {
     let where = ['p.status = ?'];
     let params = [status];
+    if (status !== 'published' && req.user?.role !== 'admin') {
+      if (!req.user) return res.status(401).json({ error: 'Authentication required' });
+      where.push('p.author_id = ?');
+      params.push(req.user.id);
+    }
     if (category) { where.push('c.slug = ?'); params.push(category); }
     if (author)   { where.push('u.username = ?'); params.push(author); }
     if (search)   { where.push('(p.title LIKE ? OR p.excerpt LIKE ?)'); params.push(`%${search}%`, `%${search}%`); }

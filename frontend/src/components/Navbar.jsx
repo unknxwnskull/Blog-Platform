@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Search, PenSquare, BookOpen, Menu, X, User, LogOut, Bookmark, LayoutDashboard } from 'lucide-react'
+import { Search, PenSquare, BookOpen, Menu, X, User, LogOut, Bookmark, LayoutDashboard, FileText } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 
 export default function Navbar() {
@@ -46,6 +46,7 @@ export default function Navbar() {
             <Link to="/" className="btn-ghost text-sm">Home</Link>
             <Link to="/categories" className="btn-ghost text-sm">Topics</Link>
             {user && <Link to="/bookmarks" className="btn-ghost text-sm">Bookmarks</Link>}
+            {user && <Link to="/drafts" className="btn-ghost text-sm">Drafts</Link>}
           </nav>
 
           {/* Right actions */}
@@ -100,6 +101,10 @@ export default function Navbar() {
                         className="flex items-center gap-2 px-4 py-2.5 text-sm font-sans text-ink-700 hover:bg-ink-50">
                         <Bookmark size={14} /> Bookmarks
                       </Link>
+                      <Link to="/drafts" onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-4 py-2.5 text-sm font-sans text-ink-700 hover:bg-ink-50">
+                        <FileText size={14} /> Drafts
+                      </Link>
                       {user.role === 'admin' && (
                         <Link to="/admin" onClick={() => setDropdownOpen(false)}
                           className="flex items-center gap-2 px-4 py-2.5 text-sm font-sans text-ink-700 hover:bg-ink-50">
@@ -144,6 +149,8 @@ export default function Navbar() {
               </Link>
               <Link to="/bookmarks" onClick={() => setMenuOpen(false)}
                 className="flex items-center px-4 py-2.5 font-sans text-sm text-ink-700 hover:bg-ink-100">Bookmarks</Link>
+              <Link to="/drafts" onClick={() => setMenuOpen(false)}
+                className="flex items-center px-4 py-2.5 font-sans text-sm text-ink-700 hover:bg-ink-100">Drafts</Link>
               <Link to={`/profile/${user.username}`} onClick={() => setMenuOpen(false)}
                 className="flex items-center px-4 py-2.5 font-sans text-sm text-ink-700 hover:bg-ink-100">My Profile</Link>
               {user.role === 'admin' && (
