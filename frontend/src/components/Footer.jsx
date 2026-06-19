@@ -19,7 +19,7 @@ export default function Footer() {
             <Link to="/write" className={`font-sans text-xs ${isAdmin ? 'text-gray-500 hover:text-amber-400' : 'text-ink-500 hover:text-ink-900'}`}>Write</Link>
           </nav>
           <p className={`font-sans text-xs ${isAdmin ? 'text-gray-600' : 'text-ink-400'}`}>
-            © {new Date().getFullYear()} Inkwell. Built with React & Node.js
+            © {new Date().getFullYear()} Inkwell
           </p>
         </div>
       </div>
